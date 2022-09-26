@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Causality is a hell of a thing</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Austin Hart" />
+    <meta name="date" content="2022-09-26" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Causality is a hell of a thing
+]
+.author[
+### Austin Hart
+]
+.date[
+### 2022-09-26
+]
+
+---
+
+
+
+
+
+class: inverse, center, middle
+
+# CAUSALITY
+## and its fundamental problem
+
+---
+# What is a causal effect?
+
+For a group of cases under study, we could observe:
+- `\(\bar{Y}_{1}=\)` avg outcome for units exposed to `\(T=1\)`
+- `\(\bar{Y}_{0}=\)` avg outcome for units exposed to `\(T=0\)`
+
+The Average Treatment Effect (ATE): 
+$$
+ATE = \bar{Y}_1 - \bar{Y}_0
+$$
+
+---
+# Thinking carefully about the ATE
+
+$$
+ATE = \bar{Y}_1 - \bar{Y}_0
+$$
+
+- "cause" is relative
+  - "The effect of `\(T=1\)` *(relative to `\(T=0\)`)* on Y"
+  - The referent changes everything
+
+- "cause" requires a counterfactual
+  - The unseen potential outcome
+  - What *would have happened if* the units were exposed instead to `\(T=?\)`
+  
+- ATE is impossible to observe
+
+
+---
+# Fundamental Problem of Causal Inference
+
+$$
+ATE = \bar{Y}_1 - \bar{Y}_0
+$$
+
+&gt; We can observe a unit's response to treatment `\((T=1)\)`. 
+&gt; We can observe the response of an untreated unit `\((T=0)\)`. 
+&gt; We cannot observe both for the same unit at the same time.  
+
+- We can record, at most, one potential outcome: `\(\bar{Y}_1\)` or `\(\bar{Y}_0\)`
+- **IMPOSSIBLE** to observe a causal effect
+- Must rely instead on INFERENCE
+
+
+---
+class: inverse, center, middle
+# Evaluating causal inferences
+
+---
+# Where can causal inference go wrong?
+
+$$
+Estimate = estimand + bias + noise
+$$
+- Estimate: Observed/measured impact
+- Estimand: *True* effect of treatment `\((ATE)\)`
+- Bias: Systematic error
+- Noise: Randomness that creates appearance of correlation
+
+
+---
+# Thinking about bias
+
+Imagine a simple study design:
+- Divide subjects into Room T (for treatment) and Room U (untreated)
+- Expose to treatment: `\(T=1\)` or `\(T=2\)`
+- Record responses and compare means: `\(\bar{Y}_{1T}\)` and `\(\bar{Y}_{0U}\)`
+
+Consider what we want vs what we have:
+$$
+`\begin{aligned}
+ATT &amp;= \bar{Y}_{1T} - \color{red}{\bar{Y}_{0T}}\\
+Observed &amp;= \bar{Y}_{1T} - \color{red}{\bar{Y}_{0U}}\\
+\\
+Bias &amp;= \bar{Y}_{0T} - \bar{Y}_{0U}
+\end{aligned}`
+$$
+
+---
+# My sample difference of means
+
+Return to the original:
+
+$$
+Estimate = estimand + bias + noise
+$$
+
+
+Rewriting it for your estimated diff of means, `\(\bar{Y}_{1T} - \bar{Y}_{0U}\)` :
+$$
+`\begin{aligned}
+Observed~Effect &amp;= ATT + \color{red}{bias} + noise\\
+ &amp;= (\bar{Y}_{1T} - \bar{Y}_{0T}) + \color{red}{(\bar{Y}_{0T} - \bar{Y}_{0U})} + noise
+\end{aligned}`
+$$
+
+---
+# Sources of bias
+
+1. Reverse causality
+2. Confounders (selection bias)
+
+
+---
+# Reverse causality
+
+$$
+Exposure~Variable \leftarrow Outcome~Variable
+$$
+
+  - Outcome affects status on the exposure variable 
+  - If outcome determines treatment, observed differences in the outcome are unrelated to the effect of treatment.
+  
+---
+# Confounders
+
+$$
+Exposure \leftarrow Confounder \rightarrow Outcome
+$$
+
+- A confounder is a variable that both:
+  - Affects status on the exposure variable (e.g., treated or untreated)
+  - Affects the outcome variable  
+- Observed correlation reflects effect of confounder independent of any effect of exposure on outcome. 
+
+
+---
+class: inverse, center, middle
+
+# Correlations, causality
+## and alternative explanations
+
+
+---
+# So you think that's causality?
+
+&gt; I conclude that A causes B.
+
+Good for you. Now consider the alternatives:
+1. Provides no evidence of correlation.
+2. It's just noise.
+3. Bias from reverse causality.
+4. Bias due to confounders.
+
+---
+# Cadavers and correlations
+
+&gt; Do you see convincing evidence of correlation?
+
+Resurrectionists and selecting on the DV
+
+--
+
+- Cadavers primarily from indigent
+- Poverty and stress may shrink thymus gland
+- SIDS autopsies thought to show enlarged thymus
+- Lacked appropriate referent: healthy kids
+
+---
+# Check the mechanism
+
+$$
+Exposure \rightarrow Mechanism \rightarrow Outcome
+$$
+
+To combat "noise"
+- Is there a plausible connection from exposure to outcome?
+
+---
+# Consider the biases
+
+&gt; Could it be that B is actually causing A?
+
+&gt; Is there a third variable acting on both?
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

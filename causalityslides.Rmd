@@ -1,0 +1,205 @@
+---
+title: "Causality is a hell of a thing"
+author: "Austin Hart"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, rladies, rladies-fonts]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  message=FALSE, warning=FALSE, eval = TRUE, echo = FALSE, 
+  fig.align = 'center'
+)
+```
+
+
+class: inverse, center, middle
+
+# CAUSALITY
+## and its fundamental problem
+
+---
+# What is a causal effect?
+
+For a group of cases under study, we could observe:
+- $\bar{Y}_{1}=$ avg outcome for units exposed to $T=1$
+- $\bar{Y}_{0}=$ avg outcome for units exposed to $T=0$
+
+The Average Treatment Effect (ATE): 
+$$
+ATE = \bar{Y}_1 - \bar{Y}_0
+$$
+
+---
+# Thinking carefully about the ATE
+
+$$
+ATE = \bar{Y}_1 - \bar{Y}_0
+$$
+
+- "cause" is relative
+  - "The effect of $T=1$ *(relative to $T=0$)* on Y"
+  - The referent changes everything
+
+- "cause" requires a counterfactual
+  - The unseen potential outcome
+  - What *would have happened if* the units were exposed instead to $T=?$
+  
+- ATE is impossible to observe
+
+
+---
+# Fundamental Problem of Causal Inference
+
+$$
+ATE = \bar{Y}_1 - \bar{Y}_0
+$$
+
+> We can observe a unit's response to treatment $(T=1)$. 
+> We can observe the response of an untreated unit $(T=0)$. 
+> We cannot observe both for the same unit at the same time.  
+
+- We can record, at most, one potential outcome: $\bar{Y}_1$ or $\bar{Y}_0$
+- **IMPOSSIBLE** to observe a causal effect
+- Must rely instead on INFERENCE
+
+
+---
+class: inverse, center, middle
+# Evaluating causal inferences
+
+---
+# Where can causal inference go wrong?
+
+$$
+Estimate = estimand + bias + noise
+$$
+- Estimate: Observed/measured impact
+- Estimand: *True* effect of treatment $(ATE)$
+- Bias: Systematic error
+- Noise: Randomness that creates appearance of correlation
+
+
+---
+# Thinking about bias
+
+Imagine a simple study design:
+- Divide subjects into Room T (for treatment) and Room U (untreated)
+- Expose to treatment: $T=1$ or $T=2$
+- Record responses and compare means: $\bar{Y}_{1T}$ and $\bar{Y}_{0U}$
+
+Consider what we want vs what we have:
+$$
+\begin{aligned}
+ATT &= \bar{Y}_{1T} - \color{red}{\bar{Y}_{0T}}\\
+Observed &= \bar{Y}_{1T} - \color{red}{\bar{Y}_{0U}}\\
+\\
+Bias &= \bar{Y}_{0T} - \bar{Y}_{0U}
+\end{aligned}
+$$
+
+---
+# My sample difference of means
+
+Return to the original:
+
+$$
+Estimate = estimand + bias + noise
+$$
+
+
+Rewriting it for your estimated diff of means, $\bar{Y}_{1T} - \bar{Y}_{0U}$ :
+$$
+\begin{aligned}
+Observed~Effect &= ATT + \color{red}{bias} + noise\\
+ &= (\bar{Y}_{1T} - \bar{Y}_{0T}) + \color{red}{(\bar{Y}_{0T} - \bar{Y}_{0U})} + noise
+\end{aligned}
+$$
+
+---
+# Sources of bias
+
+1. Reverse causality
+2. Confounders (selection bias)
+
+
+---
+# Reverse causality
+
+$$
+Exposure~Variable \leftarrow Outcome~Variable
+$$
+
+  - Outcome affects status on the exposure variable 
+  - If outcome determines treatment, observed differences in the outcome are unrelated to the effect of treatment.
+  
+---
+# Confounders
+
+$$
+Exposure \leftarrow Confounder \rightarrow Outcome
+$$
+
+- A confounder is a variable that both:
+  - Affects status on the exposure variable (e.g., treated or untreated)
+  - Affects the outcome variable  
+- Observed correlation reflects effect of confounder independent of any effect of exposure on outcome. 
+
+
+---
+class: inverse, center, middle
+
+# Correlations, causality
+## and alternative explanations
+
+
+---
+# So you think that's causality?
+
+> I conclude that A causes B.
+
+Good for you. Now consider the alternatives:
+1. Provides no evidence of correlation.
+2. It's just noise.
+3. Bias from reverse causality.
+4. Bias due to confounders.
+
+---
+# Cadavers and correlations
+
+> Do you see convincing evidence of correlation?
+
+Resurrectionists and selecting on the DV
+
+--
+
+- Cadavers primarily from indigent
+- Poverty and stress may shrink thymus gland
+- SIDS autopsies thought to show enlarged thymus
+- Lacked appropriate referent: healthy kids
+
+---
+# Check the mechanism
+
+$$
+Exposure \rightarrow Mechanism \rightarrow Outcome
+$$
+
+To combat "noise"
+- Is there a plausible connection from exposure to outcome?
+
+---
+# Consider the biases
+
+> Could it be that B is actually causing A?
+
+> Is there a third variable acting on both?
+
